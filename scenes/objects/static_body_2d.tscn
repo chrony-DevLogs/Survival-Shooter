@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7dr3muumgm6q"]
+
+[ext_resource type="Texture2D" uid="uid://blvthoulvpwv6" path="res://graphics/decals/moss/moss_1.png" id="1_mfabp"]
+
+[node name="moss" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mfabp")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(73, 137, 69, 120, 54, 121, 28, 138, 3, 99, -24, 95, -17, 68, -32, 43, -56, 30, -54, -12, -101, -8, -131, -28, -135, -50, -146, -66, -159, -97, -162, -108, -156, -123, -150, -138, -124, -127, -103, -117, -97, -98, -87, -78, -78, -88, -75, -64, -64, -42, -34, -38, -22, -36, -7, -29, 0, -40, 3, -51, 23, -45, 39, -52, 47, -54, 60, -53, 72, -55, 90, -52, 98, -63, 99, -40, 115, -27, 121, -14, 133, -3, 145, 6, 162, 7, 154, 21, 139, 27, 127, 54, 111, 84, 112, 104, 107, 112, 90, 104, 82, 133)

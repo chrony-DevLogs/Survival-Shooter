@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://dtuxcpkv0gsgj"]
+
+[ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_tdd38"]
+[ext_resource type="Texture2D" uid="uid://bryex642vm2fk" path="res://graphics/ground/stones.png" id="2_iyo8e"]
+[ext_resource type="PackedScene" uid="uid://ddkfub4vh47ys" path="res://scenes/objects/gate.tscn" id="2_pvnea"]
+[ext_resource type="PackedScene" uid="uid://bcfy5gk1y1svt" path="res://scenes/player/player.tscn" id="3_g4skc"]
+[ext_resource type="PackedScene" uid="uid://dwe7wvofa4cqa" path="res://car.tscn" id="6_5u0du"]
+[ext_resource type="PackedScene" uid="uid://chy7uvh3gr8ej" path="res://house.tscn" id="16_6ybnt"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_tdd38")
+
+[node name="ground" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ground"]
+texture_repeat = 2
+texture = ExtResource("2_iyo8e")
+region_enabled = true
+region_rect = Rect2(0, 0, 25000, 20000)
+
+[node name="Levels" type="Node2D" parent="."]
+position = Vector2(-6273, -4932)
+scale = Vector2(0.5, 0.5)
+
+[node name="Gate" parent="Levels" instance=ExtResource("2_pvnea")]
+position = Vector2(15152, 8302)
+rotation = 0.820807
+scale = Vector2(2, 2)
+
+[node name="LevelOne" type="Node2D" parent="Levels"]
+
+[node name="House" parent="Levels/LevelOne" instance=ExtResource("16_6ybnt")]
+
+[node name="Level-Location" type="Marker2D" parent="Levels/LevelOne"]
+position = Vector2(210, 3322)
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="car" parent="Objects" instance=ExtResource("6_5u0du")]
+position = Vector2(-15, -544)
+rotation = -2.30689
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_g4skc")]
+position = Vector2(211, -181)
+
+[connection signal="playerEntredGate" from="Levels/Gate" to="." method="_on_gate_player_entred_gate"]
+[connection signal="PlayerClose" from="Objects/car" to="." method="_on_car_player_close"]
+[connection signal="PlayerFar" from="Objects/car" to="." method="_on_car_player_far"]
+[connection signal="gurnade" from="Player" to="." method="_on_player_gurnade"]
+[connection signal="lazer" from="Player" to="." method="_on_player_lazer"]

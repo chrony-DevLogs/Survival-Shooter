@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://cna0u6xvhcng1"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_bbi1x"]
+[ext_resource type="Texture2D" uid="uid://clpnofu02k8ia" path="res://graphics/player/player.png" id="1_gd52d"]
+[ext_resource type="Texture2D" uid="uid://bdk6aqwbqmxul" path="res://graphics/explosions/638079168046349289.png" id="3_7jf8k"]
+[ext_resource type="PackedScene" uid="uid://c5jqx5au0dvq1" path="res://flash.tscn" id="4_gsfgn"]
+[ext_resource type="PackedScene" uid="uid://s47g6etdtryi" path="res://flash_light.tscn" id="5_2endj"]
+
+[sub_resource type="Curve" id="Curve_kibf1"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.26506, 79.5789), 0.0, 0.0, 0, 0, Vector2(0.536145, -216), 0.0, 0.0, 0, 0, Vector2(0.987952, 329.684), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_y7a66"]
+curve = SubResource("Curve_kibf1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4eo62"]
+lifetime_randomness = 0.35
+emission_shape = 1
+emission_sphere_radius = 19.86
+direction = Vector3(0, 0, 0)
+spread = 153.0
+gravity = Vector3(100, 0, 0)
+radial_accel_min = -12.63
+radial_accel_max = 42.1
+angle_min = -60.7
+angle_max = 60.6
+angle_curve = SubResource("CurveTexture_y7a66")
+scale_min = 0.05
+scale_max = 0.4
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_xcd7v"]
+polygon = PackedVector2Array(24, -61, 30, -56, 35, -50, 39, -45, 45, -37, 46, -32, 52, -27, 60, -25, 70, -16, 78, -8, 88, -10, 96, -5, 111, -2, 115, 2, 124, 3, 122, 9, 129, 8, 133, 16, 133, 25, 130, 34, 123, 31, 122, 37, 109, 38, 101, 44, 97, 46, 94, 54, 76, 54, 66, 53, 60, 51, 60, 42, 44, 41, 32, 46, 21, 49, 2, 59, -14, 63, -31, 59, -40, 42, -51, 27, -58, 11, -60, -8, -58, -22, -52, -36, -38, -47, -30, -46, -25, -52, -13, -57, -11, -55, 5, -61, 11, -57)
+
+[node name="player" type="CharacterBody2D"]
+collision_mask = 63
+script = ExtResource("1_bbi1x")
+
+[node name="FlashLight" parent="." instance=ExtResource("5_2endj")]
+position = Vector2(129, 21)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(34, 1)
+rotation = 1.5708
+texture = ExtResource("1_gd52d")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(34, 1)
+polygon = PackedVector2Array(-76, -48, -90, -37, -96, -22, -98, -10, -97, 9, -89, 27, -80, 38, -69, 58, -52, 63, -23, 54, 7, 41, 23, 41, 22, 50, 29, 54, 58, 53, 60, 46, 74, 37, 85, 37, 86, 31, 92, 33, 107, 33, 107, 6, 92, 6, 85, 9, 87, 2, 78, 1, 72, -3, 60, -6, 49, -12, 40, -10, 22, -27, 12, -30, -12, -61, -27, -59, -34, -62, -48, -56, -51, -57, -62, -53, -67, -47)
+
+[node name="gunParticles" type="Node2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="gunParticles"]
+position = Vector2(148, 21)
+rotation = 1.5708
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_4eo62")
+texture = ExtResource("3_7jf8k")
+lifetime = 0.6
+one_shot = true
+
+[node name="GunMarks" type="Node2D" parent="."]
+
+[node name="pos1" type="Marker2D" parent="GunMarks"]
+position = Vector2(127, 28)
+
+[node name="gurnadePos" type="Marker2D" parent="GunMarks"]
+position = Vector2(175, 21)
+
+[node name="pos2" type="Marker2D" parent="GunMarks"]
+position = Vector2(127, 19)
+
+[node name="pos3" type="Marker2D" parent="GunMarks"]
+position = Vector2(127, 11)
+
+[node name="laserTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="gurnadeTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="flash" parent="." instance=ExtResource("4_gsfgn")]
+position = Vector2(137, 21)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2(-4, 0)
+occluder = SubResource("OccluderPolygon2D_xcd7v")
+occluder_light_mask = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+
+[connection signal="DoFlash" from="." to="flash" method="_on_player_do_flash"]
+[connection signal="timeout" from="laserTimer" to="." method="_on_laser_timer_timeout"]
+[connection signal="timeout" from="gurnadeTimer" to="." method="_on_gurnade_timer_timeout"]

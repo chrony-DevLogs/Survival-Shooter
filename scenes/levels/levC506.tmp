@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtuxcpkv0gsgj"]
+
+[ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_tdd38"]
+[ext_resource type="PackedScene" uid="uid://ddkfub4vh47ys" path="res://scenes/objects/gate.tscn" id="2_pvnea"]
+[ext_resource type="PackedScene" uid="uid://bcfy5gk1y1svt" path="res://scenes/player/player.tscn" id="3_g4skc"]
+[ext_resource type="PackedScene" uid="uid://cng467kmu34ck" path="res://scenes/objects/bed.tscn" id="3_p4dll"]
+[ext_resource type="PackedScene" uid="uid://b7dr3muumgm6q" path="res://scenes/objects/static_body_2d.tscn" id="4_eh7a1"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_tdd38")
+
+[node name="Gate" parent="." instance=ExtResource("2_pvnea")]
+
+[node name="moss" parent="." instance=ExtResource("4_eh7a1")]
+position = Vector2(-395, 1051)
+
+[node name="Bed" parent="." instance=ExtResource("3_p4dll")]
+position = Vector2(519, 1157)
+scale = Vector2(0.515, 0.515)
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_g4skc")]
+position = Vector2(-112, 1059)
+
+[connection signal="playerEntredGate" from="Gate" to="." method="_on_gate_player_entred_gate"]
+[connection signal="gurnade" from="Player" to="." method="_on_player_gurnade"]
+[connection signal="lazer" from="Player" to="." method="_on_player_lazer"]

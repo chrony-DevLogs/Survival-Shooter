@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3y5w6g6v1a1y"]
+
+[ext_resource type="Script" path="res://scenes/objects/area_2d.gd" id="1_1q4g5"]
+[ext_resource type="Texture2D" uid="uid://b1v54aeui7y5h" path="res://graphics/projectiles/blue.png" id="1_wmffh"]
+[ext_resource type="PackedScene" uid="uid://c5jqx5au0dvq1" path="res://flash.tscn" id="3_55acd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tdhq8"]
+height = 148.0
+
+[node name="lazer" type="Area2D"]
+collision_layer = 8
+collision_mask = 38
+script = ExtResource("1_1q4g5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 9)
+texture = ExtResource("1_wmffh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_tdhq8")
+
+[node name="flash" parent="." instance=ExtResource("3_55acd")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="enableFlash" from="." to="flash" method="_on_lazer_enable_flash"]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://s47g6etdtryi"]
+
+[ext_resource type="Texture2D" uid="uid://bfj2xdabd646" path="res://graphics/decals/white.png" id="1_8negd"]
+[ext_resource type="Script" path="res://PointLight2D.gd" id="2_3tiah"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4uwgp"]
+radius = 9.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_764rj"]
+polygon = PackedVector2Array(5, -11, -14, -10, -14, 10, 3, 10, 5, 9, -4, 9, -10, 7, -13, 0, -10, -8, -5, -9, 4, -10)
+
+[node name="FlashLight" type="Area2D"]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 3.0
+shadow_enabled = true
+texture = ExtResource("1_8negd")
+texture_scale = 30.0
+script = ExtResource("2_3tiah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4uwgp")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(2, 0)
+occluder = SubResource("OccluderPolygon2D_764rj")
+
+[node name="flashLight" type="Sprite2D" parent="."]
+scale = Vector2(1.505, 1.505)
+texture = ExtResource("1_8negd")

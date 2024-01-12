@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5jqx5au0dvq1"]
+
+[ext_resource type="Script" path="res://flash.gd" id="1_2hygu"]
+[ext_resource type="Texture2D" uid="uid://bfj2xdabd646" path="res://graphics/decals/white.png" id="1_jslqw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_570b3"]
+
+[node name="flash" type="Area2D"]
+script = ExtResource("1_2hygu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_570b3")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+enabled = false
+color = Color(0, 0.909804, 0.913725, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 10.0
+shadow_item_cull_mask = 2
+texture = ExtResource("1_jslqw")
+texture_scale = 19.33
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
